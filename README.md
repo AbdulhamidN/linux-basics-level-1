@@ -1,6 +1,7 @@
 # Linux Basics - Level 1 Task
 
 **Submitted by:** Abdulhamid Nuri 
+
 **Date:** August 29, 2026  
 **Environment:** Kali Linux (Windows WSL / Terminal)
 
