@@ -1,25 +1,17 @@
-# Linux Basics - Level 1 Task
+# Linux Basics - Level 1 & 2 Tasks
 
-**Submitted by:** Abdulhamid Nuri 
-
-**Date:** August 29, 2026  
-**Environment:** Kali Linux (Windows WSL / Terminal)
-
----
-
-## Task Overview
-This project demonstrates the successful completion of all 8 basic Linux file operations as required for Level 1 — Basics.
+**Submitted by:** Abdulhamid Nuri  
+**Date:** August 31, 2026  
+**Environment:** Kali Linux (Windows WSL)
 
 ---
 
-## Screenshot Proof
+## Part 1: Level 1 — Basics (Steps 1–8)
 
 ### Screenshot 1: Directory & File Creation (Steps 1–3)
-This screenshot shows the creation of the `linux_test` directory, navigating into it, creating `one.txt`, `two.txt`, and `three.txt`, and listing them.
-
 ![Step 1-3](shot1.png)
 
-**Terminal output (all in one block):**
+**Terminal output:**
 mkdir linux_test
 cd linux_test
 touch one.txt two.txt three.txt
@@ -28,14 +20,10 @@ one.txt three.txt two.txt
 
 text
 
----
-
 ### Screenshot 2: Text Input, Renaming, Copying & Deleting (Steps 4–7)
-This screenshot shows adding unique text to the files, renaming `three.txt` to `final.txt`, creating `another_directory`, copying `one.txt` into it, and deleting `two.txt`.
-
 ![Step 4-7](shot2.png)
 
-**Terminal output (all in one block):**
+**Terminal output:**
 echo "This is the content for file one" > one.txt
 echo "This is the content for file two" > two.txt
 echo "This is the content for file three" > three.txt
@@ -46,14 +34,10 @@ rm two.txt
 
 text
 
----
-
-### Screenshot 3: Final Verification (Step 8)
-This screenshot shows the current working directory (`pwd`) and the final list of contents (`ls`) confirming the successful completion of all tasks.
-
+### Screenshot 3: Final Verification of Level 1 (Step 8)
 ![Step 8](shot3.png)
 
-**Terminal output (all in one block):**
+**Terminal output:**
 pwd
 /home/Noor/linux_test
 ls
@@ -63,16 +47,66 @@ text
 
 ---
 
-## Verification Checklist
+## Part 2: Permissions & Ownership (Steps 9–10)
 
-- [x] **Step 1:** Created directory `linux_test`.
-- [x] **Step 2:** Created files `one.txt`, `two.txt`, and `three.txt`.
-- [x] **Step 3:** Listed the files to confirm creation.
-- [x] **Step 4:** Added unique text to all three files.
-- [x] **Step 5:** Renamed `three.txt` to `final.txt`.
-- [x] **Step 6:** Created `another_directory` and copied `one.txt` into it.
-- [x] **Step 7:** Deleted `two.txt`.
-- [x] **Step 8:** Displayed the current directory and final contents.
+### Screenshot 4: Create secret.txt and set permissions to 640
+![Step 9-10](shot4.png)
+
+**Terminal output:**
+touch secret.txt
+echo "This is confidential" > secret.txt
+chmod 640 secret.txt
+ls -l secret.txt
+-rw-r----- 1 Noor Noor 21 Aug 31 15:26 secret.txt
+
+text
+
+### 📖 Explanation: What does "640" mean?
+
+`640` is an **octal (numeric) representation** of Linux file permissions. It is decoded into three digits:
+
+- **First digit (6) = Owner permissions**:  
+  Read (4) + Write (2) = 6.  
+  *The owner can read and modify the file.*
+
+- **Second digit (4) = Group permissions**:  
+  Read (4) + 0 = 4.  
+  *Members of the group can only read the file (cannot modify it).*
+
+- **Third digit (0) = Others permissions**:  
+  0 + 0 = 0.  
+  *Everyone else on the system has zero access (cannot read, write, or execute).*
+
+**Security context:** This enforces the **Principle of Least Privilege**. Only the owner can edit, the team can view, and unauthorized users are completely locked out. This is the standard permission model for sensitive configuration files (e.g., SSH private keys must be `600` to work).
+
+---
+
+### Screenshot 5: Change Owner and Group
+![Ownership Change](shot5.png)
+
+**Terminal output:**
+sudo useradd -m testuser
+sudo groupadd testgroup
+sudo chown testuser:testgroup secret.txt
+ls -l secret.txt
+-rw-r----- 1 testuser testgroup 21 Aug 31 15:26 secret.txt
+
+text
+
+**Explanation:**  
+The `chown` (Change Owner) command updated the ownership from `Noor` to `testuser` and the group to `testgroup`.  
+*Note: `sudo` is required because changing the ownership of a file is a privileged operation—only the superuser (root) can reassign file ownership in Linux.*
+
+---
+
+## Final Verification Checklist
+
+- [x] Steps 1–8 completed successfully.
+- [x] `secret.txt` created.
+- [x] Permissions set to `640` (`-rw-r-----`).
+- [x] Explained the numeric meaning of `640`.
+- [x] Changed owner to `testuser` and group to `testgroup`.
+- [x] Verified with `ls -l`.
 
 ## Conclusion
-All tasks have been executed successfully on Kali Linux. The final directory contains exactly `another_directory`, `final.txt`, and `one.txt`, confirming `two.txt` is removed and the renaming/copying was successful.
+All required tasks (1 through 10) have been executed successfully. The repository contains complete screenshot proof and a clear explanation of the underlying Linux security concepts.
