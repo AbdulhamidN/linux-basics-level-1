@@ -101,7 +101,7 @@ The `chown` (Change Owner) command updated the ownership from `Noor` to `testuse
 
 ## Final Verification Checklist
 
-- [x] Steps 1–8 completed successfully.
+- [x] Steps 1–10 completed successfully.
 - [x] `secret.txt` created.
 - [x] Permissions set to `640` (`-rw-r-----`).
 - [x] Explained the numeric meaning of `640`.
