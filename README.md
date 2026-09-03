@@ -1,7 +1,7 @@
-# Linux Basics - Level 1 & 2 Tasks
+# Linux Basics - Level 1, 2 & 3 Tasks
 
 **Submitted by:** Abdulhamid Nuri  
-**Date:** August 31, 2026  
+**Date:** September 03, 2026  
 **Environment:** Kali Linux (Windows WSL)
 
 ---
@@ -99,14 +99,54 @@ The `chown` (Change Owner) command updated the ownership from `Noor` to `testuse
 
 ---
 
-## Final Verification Checklist
+## Part 3: Users and Groups (Task 3 - Steps 11–15)
 
-- [x] Steps 1–10 completed successfully.
-- [x] `secret.txt` created.
-- [x] Permissions set to `640` (`-rw-r-----`).
-- [x] Explained the numeric meaning of `640`.
-- [x] Changed owner to `testuser` and group to `testgroup`.
-- [x] Verified with `ls -l`.
+### Screenshot 6: User and Group Creation & Verification
+![User and Group](shot6.png)
 
-## Conclusion
-All required tasks (1 through 10) have been executed successfully. The repository contains complete screenshot proof and a clear explanation of the underlying Linux security concepts.
+**Terminal output:**
+sudo useradd -m student1
+sudo passwd student1
+sudo groupadd developers
+sudo usermod -aG developers student1
+groups student1
+student1 : student1 developers
+
+text
+
+---
+
+### Screenshot 7: Switch User and Create File
+![Switch User and File Creation](shot7.png)
+
+**Terminal output:**
+sudo su - student1
+whoami
+student1
+touch student1_file.txt
+echo "Created by student1" > student1_file.txt
+ls -l student1_file.txt
+-rw-r--r-- 1 student1 student1 21 Aug 31 16:00 student1_file.txt
+
+text
+
+### 📖 Explanation: Who owns the file and why?
+
+The file `student1_file.txt` is owned by the user **`student1`**.
+
+**Why?** 
+Linux determines file ownership based on the **Effective User ID (EUID)** of the process that creates the file. 
+
+When I executed `sudo su - student1`, I initiated a new login shell running under `student1`'s identity. The `touch` command was executed with `student1`'s EUID. The Linux kernel's filesystem driver automatically assigns the `uid` (User ID) of the calling process to the newly created inode (file). Since the calling process belonged to `student1`, the kernel assigned `student1` as the owner and primary group owner of `student1_file.txt`.
+
+---
+
+## Final Verification Checklist (All Tasks 1-3)
+
+- [x] Created `linux_test` directory and files.
+- [x] Set permissions to `640` on `secret.txt` and explained octal notation.
+- [x] Changed ownership of `secret.txt` to `testuser:testgroup`.
+- [x] Created user `student1` and group `developers`.
+- [x] Added `student1` to `developers` group and verified.
+- [x] Switched to `student1` and created a file.
+- [x] Explained file ownership based on the EUID of the creating process.
